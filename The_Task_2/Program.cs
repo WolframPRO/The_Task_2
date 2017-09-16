@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Text;
 
 namespace The_Task_2
 {
@@ -9,25 +10,32 @@ namespace The_Task_2
         {
             string strTemp = File.ReadAllText("INPUT.TXT").Trim();
             
-            if (strTemp.Length == 0) File.WriteAllText("OUTPUT.TXT", "0");
+            if (strTemp.Length == 0) File.WriteAllText("OUTPUT.TXT", "1");
             else if (strTemp.Length == 1) File.WriteAllText("OUTPUT.TXT", "1");
             else
             {
 
-                Lab[] c = new Lab[strTemp.Length + 1];
-                c[0] = new Lab("1");
-                c[1] = new Lab("1");
-
-
-                for (int i = 2; i < c.Length; i++)
+                
                 {
-                    int cur = Int32.Parse(strTemp[i - 2].ToString() + strTemp[i-1]);
-                    if (cur > 9 && cur < 34) c[i] = c[i - 1] + c[i - 2];
-                    else c[i] = c[i - 1];
+                    Lab[] c = new Lab[strTemp.Length + 1];
+                    c[0] = new Lab("1");
+                    c[1] = new Lab("1");
+
+                    for (int i = 2; i < c.Length; i++)
+                    {
+                        int cur = Int32.Parse(strTemp[i - 2].ToString() + strTemp[i - 1]);
+                        if (cur > 9 && cur < 34) c[i] = c[i - 1] + c[i - 2];
+                        else c[i] = c[i - 1];
+                    }
+                    string a = c[c.Length - 1].Show();
+                    int n = 0;
+                    while (a[n] == '0')
+                    {
+                        n++;
+                    }
+                    a = a.Remove(0, n);
+                    File.WriteAllText("OUTPUT.TXT", a);
                 }
-
-
-                File.WriteAllText("OUTPUT.TXT", c[c.Length - 1].Show());
             }
         }
     }
@@ -70,7 +78,9 @@ namespace The_Task_2
             for (int i = Number.Length - 1; i >= 0; i--)
             {
                 if (i == (Number.Length - 1) && Number[i] == 0) continue;
-                str += Number[i];
+                {
+                    str += Number[i];
+                }
             }
             Console.WriteLine();
             return str;
